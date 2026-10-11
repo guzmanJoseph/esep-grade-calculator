@@ -100,3 +100,26 @@ func TestAverageMultipleGrades(t *testing.T) {
 		t.Errorf("computeAverage() = %v, want 90", got)
 	}
 }
+
+
+func TestPassFailPassAt70(t *testing.T) {
+	gc := NewGradeCalculator(PassFailMode)
+	gc.AddGrade("assignment", 70, Assignment)
+	gc.AddGrade("exam", 70, Exam)
+	gc.AddGrade("essay", 70, Essay)
+
+	if got := gc.GetFinalGrade(); got != "Pass" {
+		t.Errorf("GetFinalGrade() = %q, want %q", got, "Pass")
+	}
+}
+
+func TestPassFailFailBelow70(t *testing.T) {
+	gc := NewGradeCalculator(PassFailMode)
+	gc.AddGrade("assignment", 69, Assignment)
+	gc.AddGrade("exam", 69, Exam)
+	gc.AddGrade("essay", 69, Essay)
+
+	if got := gc.GetFinalGrade(); got != "Fail" {
+		t.Errorf("GetFinalGrade() = %q, want %q", got, "Fail")
+	}
+}
