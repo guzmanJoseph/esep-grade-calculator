@@ -1,6 +1,8 @@
 # ESEP Grade Calculator
 
-A Go library that calculates a student's final course grade from assignment, exam, and essay scores. Each category is averaged separately, then weighted at 50%, 35%, and 15%. The weighted numerical result is converted to a letter grade.
+A Go library that calculates a student's final course grade from assignment, exam, and essay scores. Each category is averaged separately, then weighted at 50%, 35%, and 15%.
+
+By default, the weighted numerical result is converted to a letter grade. To use Pass/Fail evaluation with a 70-point passing threshold, create the calculator with `NewGradeCalculator(PassFailMode)`.
 
 ## Requirements
 
