@@ -58,41 +58,40 @@ func (gc *GradeCalculator) AddGrade(name string, grade int, gradeType GradeType)
 	switch gradeType {
 	case Assignment:
 		gc.assignments = append(gc.assignments, Grade{
-			Name:  name,
-			Grade: grade,
-			Type:  Assignment,
+			Name: name, Grade: grade, Type: Assignment,
 		})
 	case Exam:
 		gc.exams = append(gc.exams, Grade{
-			Name:  name,
-			Grade: grade,
-			Type:  Exam,
+			Name: name, Grade: grade, Type: Exam,
 		})
 	case Essay:
 		gc.essays = append(gc.essays, Grade{
-			Name:  name,
-			Grade: grade,
-			Type:  Essay,
+			Name: name, Grade: grade, Type: Essay,
 		})
 	}
 }
 
 func (gc *GradeCalculator) calculateNumericalGrade() int {
-	assignment_average := computeAverage(gc.assignments)
-	exam_average := computeAverage(gc.exams)
-	essay_average := computeAverage(gc.exams)
+	assignmentAverage := computeAverage(gc.assignments)
+	examAverage := computeAverage(gc.exams)
+	essayAverage := computeAverage(gc.essays)
 
-	weighted_grade := float64(assignment_average)*.5 + float64(exam_average)*.35 + float64(essay_average)*.15
+	weightedGrade := assignmentAverage*0.50 +
+		examAverage*0.35 +
+		essayAverage*0.15
 
-	return int(weighted_grade)
+	return int(weightedGrade)
 }
 
-func computeAverage(grades []Grade) int {
-	sum := 0
-
-	for grade, _ := range grades {
-		sum += grade
+func computeAverage(grades []Grade) float64 {
+	if len(grades) == 0 {
+		return 0
 	}
 
-	return sum / len(grades)
+	sum := 0
+	for _, grade := range grades {
+		sum += grade.Grade
+	}
+
+	return float64(sum) / float64(len(grades))
 }
